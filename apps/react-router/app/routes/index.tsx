@@ -6,19 +6,21 @@ import { Separator } from "~/components/ui/separator";
 import MediaUpload from "~/components/MediaUpload";
 import { ls3 } from "~/utils/storage.server";
 import { MediaSearch } from "~/components/MediaSearch";
+import { MEDIA_BUCKET_NAME } from "~/constants";
+import MediaGrid from "~/components/MediaGrid";
 export function meta({}: Route.MetaArgs) {
   return [{ title: "Local S3" }];
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const buckets = await ls3.listBuckets();
+  const items = await ls3.listObjects(MEDIA_BUCKET_NAME);
 
   return {
-    buckets,
+    items,
   };
 }
 
-export default function Home() {
+export default function Home({ loaderData: { items } }: Route.ComponentProps) {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
@@ -88,7 +90,10 @@ export default function Home() {
         <Separator className="my-6" />
 
         {/* Media Grid */}
-        <div className="mt-6">{/* <MediaGrid /> */}</div>
+        <div className="mt-6">
+          {" "}
+          <MediaGrid searchTerm={""} mediaItems={items} />{" "}
+        </div>
 
         {/* Media Modal */}
         {/* <MediaModal /> */}
