@@ -8,6 +8,8 @@ import { ls3 } from "~/utils/storage.server";
 import { MediaSearch } from "~/components/MediaSearch";
 import { MEDIA_BUCKET_NAME } from "~/constants";
 import MediaGrid from "~/components/MediaGrid";
+
+import { useDebounceValue } from "usehooks-ts";
 export function meta({}: Route.MetaArgs) {
   return [{ title: "Local S3" }];
 }
@@ -23,6 +25,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function Home({ loaderData: { items } }: Route.ComponentProps) {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
+  const [searchTerm, setSearchTerm] = useDebounceValue("", 500);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -53,7 +57,10 @@ export default function Home({ loaderData: { items } }: Route.ComponentProps) {
 
           <div className="flex-1 w-full md:w-auto">
             {" "}
-            <MediaSearch />{" "}
+            <MediaSearch
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />{" "}
           </div>
 
           <div className="flex border rounded-md overflow-hidden">
@@ -91,8 +98,7 @@ export default function Home({ loaderData: { items } }: Route.ComponentProps) {
 
         {/* Media Grid */}
         <div className="mt-6">
-          {" "}
-          <MediaGrid searchTerm={""} mediaItems={items} />{" "}
+          <MediaGrid searchTerm={searchTerm} mediaItems={items} />
         </div>
 
         {/* Media Modal */}
