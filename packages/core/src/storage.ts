@@ -344,6 +344,7 @@ export class LocalS3Storage {
             metadata?.systemMetadata?.lastModified || stats.mtime.toISOString(),
           size: metadata?.systemMetadata?.size || stats.size,
           etag: metadata?.systemMetadata?.etag || "",
+          contentType: metadata.systemMetadata?.contentType,
         });
       } catch (err) {
         // Skip files that can't be accessed
