@@ -12,6 +12,7 @@ export interface ObjectInfo {
   lastModified: string;
   size: number;
   etag: string;
+  contentType?: string;
 }
 
 export interface PutObjectResult {
