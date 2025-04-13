@@ -1,6 +1,5 @@
 import { ls3 } from "~/utils/storage.server";
-import type { Route } from "./+types/$bucket.objects.$key";
-
+import type { Route } from "./+types/index";
 export function headers({ loaderHeaders }: Route.HeadersArgs) {
   return loaderHeaders;
 }
