@@ -178,7 +178,7 @@ export default function MediaModal({
               </Button>
             ) : (
               <Button variant="outline" onClick={() => setSelectedMedia(null)}>
-                <X className="h-4 w-4 mr-2" />
+                <X className="size-5 mr-2" />
                 Close
               </Button>
             )}

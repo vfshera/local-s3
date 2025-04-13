@@ -16,6 +16,7 @@ import {
 import { format } from "date-fns";
 import type { ObjectInfo } from "local-s3";
 import { MEDIA_BUCKET_NAME } from "~/constants";
+import { useSubmit } from "react-router";
 type MediaGridProps = {
   mediaItems: ObjectInfo[];
   searchTerm: string;
@@ -31,6 +32,8 @@ export default function MediaGrid({
       item.key.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [mediaItems, searchTerm]);
+
+  const submit = useSubmit();
 
   const formatFileSize = (bytes?: number) => {
     if (!bytes) return "Unknown size";
@@ -110,7 +113,10 @@ export default function MediaGrid({
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => {
-                          // deleteMedia(media.id)
+                          submit(null, {
+                            method: "delete",
+                            action: `/media/${MEDIA_BUCKET_NAME}/objects/${media.key}/delete`,
+                          });
                         }}
                         className="bg-red-500 hover:bg-red-600"
                       >
