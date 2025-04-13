@@ -10,6 +10,8 @@ import { MEDIA_BUCKET_NAME } from "~/constants";
 import MediaGrid from "~/components/MediaGrid";
 
 import { useDebounceValue } from "usehooks-ts";
+import type { ObjectInfo } from "local-s3";
+import MediaModal from "~/components/MediaModal";
 export function meta({}: Route.MetaArgs) {
   return [{ title: "Local S3" }];
 }
@@ -27,6 +29,8 @@ export default function Home({ loaderData: { items } }: Route.ComponentProps) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const [searchTerm, setSearchTerm] = useDebounceValue("", 500);
+
+  const [selectedMedia, setSelectedMedia] = useState<ObjectInfo | null>(null);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -87,7 +91,6 @@ export default function Home({ loaderData: { items } }: Route.ComponentProps) {
           </div>
         </div>
 
-        {/* Upload area */}
         {isUploadOpen && (
           <div className="mb-8 animate-fade-in">
             <MediaUpload />
@@ -96,13 +99,18 @@ export default function Home({ loaderData: { items } }: Route.ComponentProps) {
 
         <Separator className="my-6" />
 
-        {/* Media Grid */}
         <div className="mt-6">
-          <MediaGrid searchTerm={searchTerm} mediaItems={items} />
+          <MediaGrid
+            searchTerm={searchTerm}
+            mediaItems={items}
+            setSelectedMedia={setSelectedMedia}
+          />
         </div>
 
-        {/* Media Modal */}
-        {/* <MediaModal /> */}
+        <MediaModal
+          selectedMedia={selectedMedia}
+          setSelectedMedia={setSelectedMedia}
+        />
       </div>
     </div>
   );

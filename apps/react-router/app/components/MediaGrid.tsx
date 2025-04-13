@@ -19,8 +19,13 @@ import { MEDIA_BUCKET_NAME } from "~/constants";
 type MediaGridProps = {
   mediaItems: ObjectInfo[];
   searchTerm: string;
+  setSelectedMedia: React.Dispatch<React.SetStateAction<ObjectInfo | null>>;
 };
-export default function MediaGrid({ mediaItems, searchTerm }: MediaGridProps) {
+export default function MediaGrid({
+  mediaItems,
+  searchTerm,
+  setSelectedMedia,
+}: MediaGridProps) {
   const filteredMedia = useMemo(() => {
     return mediaItems.filter((item) =>
       item.key.toLowerCase().includes(searchTerm.toLowerCase())
@@ -73,7 +78,7 @@ export default function MediaGrid({ mediaItems, searchTerm }: MediaGridProps) {
                   size="icon"
                   variant="secondary"
                   onClick={() => {
-                    // setSelectedMedia(media)
+                    setSelectedMedia(media);
                   }}
                 >
                   <Eye className="h-4 w-4" />
@@ -82,7 +87,7 @@ export default function MediaGrid({ mediaItems, searchTerm }: MediaGridProps) {
                   size="icon"
                   variant="secondary"
                   onClick={() => {
-                    // setSelectedMedia(media)
+                    setSelectedMedia(media);
                   }}
                 >
                   <Pencil className="h-4 w-4" />
