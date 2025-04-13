@@ -233,52 +233,6 @@ export class LocalS3Storage {
       size,
     };
   }
-  // public async putObject(
-  //   bucketName: string,
-  //   objectKey: string,
-  //   data: Buffer,
-  //   metadata: Record<string, any> = {}
-  // ): Promise<PutObjectResult> {
-  //   const bucketPath = path.join(this.rootDirectory, bucketName);
-  //   const objectPath = path.join(bucketPath, objectKey);
-  //   const objectDir = path.dirname(objectPath);
-
-  //   // Ensure bucket exists
-  //   try {
-  //     await fs.access(bucketPath);
-  //   } catch (err) {
-  //     throw new Error(`Bucket ${bucketName} does not exist`);
-  //   }
-
-  //   // Create directories if they don't exist
-  //   await fs.mkdir(objectDir, { recursive: true });
-
-  //   // Write the file
-  //   await fs.writeFile(objectPath, data);
-
-  //   // Calculate etag (MD5 hash)
-  //   const etag = crypto.createHash("md5").update(data).digest("hex");
-
-  //   // Store metadata
-  //   const systemMetadata = {
-  //     contentType: metadata.contentType || "application/octet-stream",
-  //     size: Buffer.byteLength(data),
-  //     lastModified: new Date().toISOString(),
-  //     etag,
-  //   };
-
-  //   await writeMetadata(this.metadataDir, bucketName, objectKey, {
-  //     ...metadata,
-  //     systemMetadata,
-  //   });
-
-  //   return {
-  //     etag,
-  //     key: objectKey,
-  //     bucket: bucketName,
-  //     size: systemMetadata.size,
-  //   };
-  // }
 
   /**
    * Download an object from a bucket
